@@ -1,27 +1,56 @@
-.calendarWidget{
+.calendarWidget {
 
 }
-.header{
-	&:after{
-		content:"";
-		display: block;
-		clear:left;
+
+.header {
+
+}
+
+.navigation{
+	padding-left: 0;
+	text-align: center;
+
+	li{
+		padding: 15px 30px;
+		display: inline-block;
 	}
 }
-.title {
+
+.weeksList {
+	&:after {
+		content: "";
+		display: block;
+		clear: left;
+	}
+}
+
+.weeksListItem {
+	display: block;
+	text-align: center;
 	width: 14.2857142857%;
 	font-weight: bold;
-	float:left;
+	float: left;
 }
-.daysList{
-	&:after{
-		content:"";
+
+.daysList {
+	&:after {
+		content: "";
 		display: block;
-		clear:left;
+		clear: left;
 	}
 }
-.day{
+
+.day {
 	width: 14.2857142857%;
 	display: block;
-	float:left;
+	float: left;
+	padding: 15px;
+	border: 1px solid #e5e5e5;
+	background: #fff;
+	text-align: center;
+}
+
+.dayDisable{
+	@extend .day;
+	background: #f7f7f7;
 }

@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import DateHelper from './helpers/DateHelper';
 
 const styles = require('./Calendar.scss');
 
@@ -131,27 +132,69 @@ export default class Calendar extends Component {
 		return data;
 	}
 
+	goToPrevMonth(){
+		"use strict";
+
+		var activeMonth = (this.state && this.state.activeMonth)? this.state.activeMonth : new Date();
+		var nextMonth = DateHelper.getPrevMonthByDate(activeMonth);
+
+		this.setState({
+			activeMonth:nextMonth
+		});
+		return false;
+	}
+
+	goToNextMonth(){
+		"use strict";
+
+		var activeMonth = (this.state && this.state.activeMonth)? this.state.activeMonth : new Date();
+		var nextMonth = DateHelper.getNextMonthByDate(activeMonth);
+
+		this.setState({
+			activeMonth:nextMonth
+		});
+		return false;
+	}
+
+
 	render() {
 
-		var currentDay = new Date();
+		var currentDay = (this.state && this.state.activeMonth)? this.state.activeMonth : new Date();
+		var currentMonthTitle = currentDay.getFullYear() + '/' + currentDay.getMonth();
+
 		var days = [];
 		var daysData = this.calcDays(currentDay);
+
 		for(var i in daysData.all){
-			days.push(<span className={styles.day}>{daysData.all[i].date}</span>);
+			var classNameDay = (daysData.all[i].hidden)? styles.dayDisable : styles.day;
+			days.push(<span className={classNameDay}>{daysData.all[i].date}</span>);
 		}
+
 
 		return (
 			<div className={styles.calendarWidget}>
 
 				<div className="container">
+
 					<div className={styles.header}>
-						<div className={styles.title}>SUN</div>
-						<div className={styles.title}>MON</div>
-						<div className={styles.title}>TUES</div>
-						<div className={styles.title}>WED</div>
-						<div className={styles.title}>THU</div>
-						<div className={styles.title}>FRI</div>
-						<div className={styles.title}>SAT</div>
+
+						<h3>{currentMonthTitle}</h3>
+
+						<ul className={styles.navigation}>
+							<li><a href="#" onClick={this.goToPrevMonth.bind(this)}>Prev Month</a></li>
+							<li><a href="#" onClick={this.goToNextMonth.bind(this)}>Next Month</a></li>
+						</ul>
+
+						<ul className={styles.weeksList}>
+							<li className={styles.weeksListItem}>SUN</li>
+							<li className={styles.weeksListItem}>MON</li>
+							<li className={styles.weeksListItem}>TUES</li>
+							<li className={styles.weeksListItem}>WED</li>
+							<li className={styles.weeksListItem}>THU</li>
+							<li className={styles.weeksListItem}>FRI</li>
+							<li className={styles.weeksListItem}>SAT</li>
+						</ul>
+
 					</div>
 
 					<div className={styles.daysList}>

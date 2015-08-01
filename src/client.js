@@ -12,6 +12,7 @@ const dest = document.getElementById('content');
 React.render((
 	<Router history={new HashHistory}>
 		<Route path="/" component={Index} />
+		<Route path="/:year/:month" component={Index} />
 		<Route path="#about" component={Simply} />
 		<Route path="*" component={NotFound} />
 	</Router>
