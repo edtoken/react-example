@@ -7,7 +7,7 @@ export default class Footer extends Component {
 			<div className="container">
 				<hr/>
 				<h4>Footer</h4>
-				<p>about text</p>
+				<p>Ed. ReactJS example. <a href="http://edtoken.github.io" target="_blank">edtoken.github.io</a></p>
 			</div>
 		);
 	}

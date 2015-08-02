@@ -13,10 +13,6 @@ export default class Index extends Component {
 		return (
 			<div>
 				<Header />
-					<div className="container">
-						<h2>Index page</h2>
-						<p>index page</p>
-					</div>
 					<Calendar />
 				<Footer />
 			</div>

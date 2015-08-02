@@ -1,0 +1,17 @@
+@import "variables";
+
+.day {
+	width: $list-item-width;
+	display: block;
+	float: left;
+	padding: 15px;
+	border: solid $color-1;
+	border-width: 0 1px 1px 0;
+	background: #fff;
+	text-align: center;
+}
+
+.dayDisable{
+	@extend .day;
+	background: #f7f7f7;
+}

@@ -1,10 +1,19 @@
 import React, {Component} from 'react';
 import DateHelper from './helpers/DateHelper';
+import CalendarDay from './CalendarDay';
 
-const styles = require('./Calendar.scss');
-
+let styles = require('./Calendar.scss');
 
 export default class Calendar extends Component {
+
+	constructor(props) {
+
+		super(props);
+
+		this.state = {
+			activeMonth: new Date()
+		};
+	}
 
 	/**
 	 *
@@ -132,42 +141,56 @@ export default class Calendar extends Component {
 		return data;
 	}
 
-	goToPrevMonth(){
+	goToPrevMonth() {
 		"use strict";
 
-		var activeMonth = (this.state && this.state.activeMonth)? this.state.activeMonth : new Date();
+		var activeMonth = this.state.activeMonth;
 		var nextMonth = DateHelper.getPrevMonthByDate(activeMonth);
 
 		this.setState({
-			activeMonth:nextMonth
+			activeMonth: nextMonth
 		});
 		return false;
 	}
 
-	goToNextMonth(){
+	goToNextMonth() {
 		"use strict";
 
-		var activeMonth = (this.state && this.state.activeMonth)? this.state.activeMonth : new Date();
+		var activeMonth = this.state.activeMonth;
 		var nextMonth = DateHelper.getNextMonthByDate(activeMonth);
 
 		this.setState({
-			activeMonth:nextMonth
+			activeMonth: nextMonth
 		});
 		return false;
+	}
+
+	//events
+	eventClickPrevMonth(){
+		"use strict";
+		return this.goToPrevMonth();
+	}
+
+	eventClickNextMonth(){
+		"use strict";
+		return this.goToNextMonth();
 	}
 
 
 	render() {
 
-		var currentDay = (this.state && this.state.activeMonth)? this.state.activeMonth : new Date();
-		var currentMonthTitle = currentDay.getFullYear() + '/' + currentDay.getMonth();
+		var currentDay = this.state.activeMonth;
+		var currentMonthTitle = currentDay.getFullYear() + '/' + this.props.monthNames[currentDay.getMonth()];
 
 		var days = [];
+		var weeksList = [];
 		var daysData = this.calcDays(currentDay);
 
-		for(var i in daysData.all){
-			var classNameDay = (daysData.all[i].hidden)? styles.dayDisable : styles.day;
-			days.push(<span className={classNameDay}>{daysData.all[i].date}</span>);
+		for (var i in daysData.all) {
+			days.push(<CalendarDay data={daysData.all[i]} />);
+		}
+		for(var w in this.props.weeks){
+			weeksList.push(<li className={styles.weeksListItem}>{this.props.weeks[w]}</li>)
 		}
 
 
@@ -178,21 +201,21 @@ export default class Calendar extends Component {
 
 					<div className={styles.header}>
 
-						<h3>{currentMonthTitle}</h3>
+						<div className="row">
+							<h3 className="col-sm-3">{currentMonthTitle}</h3>
 
-						<ul className={styles.navigation}>
-							<li><a href="#" onClick={this.goToPrevMonth.bind(this)}>Prev Month</a></li>
-							<li><a href="#" onClick={this.goToNextMonth.bind(this)}>Next Month</a></li>
-						</ul>
+							<div className="col-sm-9">
+								<ul className={styles.navigation}>
+									<li><a href="#" className="btn btn-primary" onClick={this.eventClickPrevMonth.bind(this)}>Prev
+										Month</a></li>
+									<li><a href="#" className="btn btn-primary" onClick={this.eventClickNextMonth.bind(this)}>Next
+										Month</a></li>
+								</ul>
+							</div>
+						</div>
 
 						<ul className={styles.weeksList}>
-							<li className={styles.weeksListItem}>SUN</li>
-							<li className={styles.weeksListItem}>MON</li>
-							<li className={styles.weeksListItem}>TUES</li>
-							<li className={styles.weeksListItem}>WED</li>
-							<li className={styles.weeksListItem}>THU</li>
-							<li className={styles.weeksListItem}>FRI</li>
-							<li className={styles.weeksListItem}>SAT</li>
+							{weeksList}
 						</ul>
 
 					</div>
@@ -205,3 +228,10 @@ export default class Calendar extends Component {
 		);
 	}
 }
+
+Calendar.defaultProps = {
+	monthNames: ["January", "February", "March", "April", "May",
+		"June", "July", "August", "September", "October", "November", "December"],
+	weeks:['SUN', 'MON','TUES', 'WED', 'THU', 'FRI', 'SAT']
+};
+
