@@ -1,4 +1,5 @@
 @import "variables";
+@import "mixins";
 
 .day {
 	width: $list-item-width;
@@ -9,9 +10,11 @@
 	border-width: 0 1px 1px 0;
 	background: #fff;
 	text-align: center;
+	@include no-select();
 }
 
 .dayDisable{
 	@extend .day;
 	background: #f7f7f7;
+	@include no-select();
 }

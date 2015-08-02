@@ -68,7 +68,7 @@ export default class Calendar extends Component {
 			// складываю дни предыдущего месяца в массив для дальнейшей обработки
 			for (var pi = prevStartDate; pi <= prevMonthDaysCount; pi++) {
 				data.prev.push({
-					hidden: true,
+					disable: true,
 					date: pi,
 					month: dataObjPrev.month,
 					year: dataObjPrev.year
@@ -98,7 +98,7 @@ export default class Calendar extends Component {
 			for (var ni = 1; ni <= nextMonthDaysCount; ni++) {
 				// складываю дни следующего месяца
 				data.next.push({
-					hidden: true,
+					disable: true,
 					date: ni,
 					month: dataObjNext.month,
 					year: dataObjNext.year
